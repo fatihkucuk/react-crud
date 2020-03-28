@@ -1,0 +1,9 @@
+.ItemList {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.ItemList .not-found-text,
+.ItemList .loading-text {
+  text-align: center;
+}

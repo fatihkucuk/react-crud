@@ -1,0 +1,28 @@
+.NavigationBar nav {
+  text-align: center;
+  padding: 15px;
+  background-color: #f6f6f6;
+}
+
+.NavigationBar nav ul {
+  list-style-type: none;
+}
+
+.NavigationBar nav ul li {
+  display: inline;
+  margin-right: 15px;
+}
+
+.NavigationBar nav ul li a {
+  color: #000;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 10px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.NavigationBar nav ul li a:hover,
+.NavigationBar nav ul li a.active {
+  background-color: #ccc;
+}

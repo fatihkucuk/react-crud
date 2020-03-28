@@ -1,0 +1,29 @@
+.ItemDetail {
+  border: 1px solid #ccc;
+  margin: 15px auto;
+  width: 600px;
+  box-shadow: 1px 1px 2px 1px #d9d9d9;
+  width: 50%;
+  min-width: 280px;
+}
+
+.ItemDetail label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.ItemDetail .form-group {
+  margin-bottom: 15px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 10px;
+}
+
+.ItemDetail .form-item {
+  width: 250px;
+  border: 1px solid #ccc;
+  padding: 5px;
+  border-radius: 3px;
+  font-size: 14px;
+}
