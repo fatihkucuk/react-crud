@@ -1,5 +1,5 @@
-import ItemList from './components/ItemList/ItemList';
-import ItemDetail from './components/ItemDetail/ItemDetail';
+import ItemList from './pages/ListPage/ItemList';
+import ItemDetail from './pages/DetailPage/ItemDetail';
 
 const routes = [
   {

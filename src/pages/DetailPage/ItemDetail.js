@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './ItemDetail.css';
 import axios from 'axios';
-import Loading from '../Loading/Loading';
+import Loading from '../../components/Loading/Loading';
 
 const ItemDetail = (props) => {
   const [id, setId] = useState('');

@@ -9,7 +9,7 @@ const NavigationBar = () => {
           <ul>
             <li>
               <NavLink to="/item-list" exact>
-                Home
+                List
               </NavLink>
             </li>
             <li>
