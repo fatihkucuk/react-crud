@@ -1,7 +1,7 @@
-import rootReducer from './reducer';
+import rootReducer from './reducers';
 import { combineReducers } from 'redux';
-import listPageReducer from '../pages/ListPage/store/reducer';
-import detailPageReducer from '../pages/DetailPage/store/reducer';
+import listPageReducer from '../pages/ListPage/store/reducers';
+import detailPageReducer from '../pages/DetailPage/store/reducers';
 
 export const combinedReducers = combineReducers({
   rootReducer,

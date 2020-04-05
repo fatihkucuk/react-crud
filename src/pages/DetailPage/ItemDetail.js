@@ -1,81 +1,49 @@
 import React, { useState, useEffect } from 'react';
 import './ItemDetail.css';
-import axios from 'axios';
 import Loading from '../../components/Loading/Loading';
-
+import { connect } from 'react-redux';
+import * as actionCreators from './store/action-types';
+import * as rootActionCreators from '../../store/action-types';
+import { PAGE_MODE } from '../../constants';
 const ItemDetail = (props) => {
-  const [id, setId] = useState('');
-  const [title, setTitle] = useState('');
-  const [body, setBody] = useState('');
   const [pageMode, setPageMode] = useState(
-    !!props.match.params.id ? 'Update' : 'Insert'
+    !!props.match.params.id ? PAGE_MODE.UPDATE : PAGE_MODE.INSERT
   );
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (pageMode === 'Update') {
-      setLoading(true);
-      axios
-        .get(
-          `https://jsonplaceholder.typicode.com/posts/${props.match.params.id}`
-        )
-        .then((res) => {
-          const item = res.data;
-          setId(item.id);
-          setTitle(item.title);
-          setBody(item.body);
-          setLoading(false);
-        })
-        .catch((err) => {
-          alert(err);
-          setLoading(false);
-        });
+    props.setItem({ id: '', title: '', body: '' });
+    if (pageMode === PAGE_MODE.UPDATE) {
+      props.getItem(props.match.params.id);
     }
   }, []);
 
   const titleChangedHandler = (e) => {
-    setTitle(e.target.value);
+    props.item.title = e.target.value;
+    props.setItem(props.item);
   };
 
   const bodyChangedHandler = (e) => {
-    setBody(e.target.value);
+    props.item.body = e.target.value;
+    props.setItem(props.item);
+  };
+
+  const navigateToListPage = () => {
+    props.history.push('/item-list');
   };
 
   const addItemHandler = () => {
-    const item = {
-      title,
-      body,
+    const callback = () => {
+      navigateToListPage();
     };
-    setLoading(true);
-    axios
-      .post('https://jsonplaceholder.typicode.com/posts', item)
-      .then((res) => {
-        props.history.push('/item-list');
-        setLoading(false);
-      })
-      .catch((err) => {
-        alert(err);
-        setLoading(false);
-      });
+    props.postItem(props.item, callback);
   };
 
   const updateItemHandler = () => {
-    const updatedItem = {
-      id,
-      title,
-      body,
+    const callback = () => {
+      navigateToListPage();
     };
-    setLoading(true);
-    axios
-      .put(`https://jsonplaceholder.typicode.com/posts/${id}`, updatedItem)
-      .then((res) => {
-        props.history.push('/item-list');
-        setLoading(false);
-      })
-      .catch((err) => {
-        alert(err);
-        setLoading(false);
-      });
+    props.setLoading(true);
+    props.putItem(props.item, callback);
   };
 
   return (
@@ -88,7 +56,7 @@ const ItemDetail = (props) => {
           type="text"
           placeholder="Title"
           onChange={titleChangedHandler}
-          value={title}></input>
+          value={props.item.title}></input>
       </div>
       <div className="form-group">
         <label>Body</label>
@@ -99,10 +67,10 @@ const ItemDetail = (props) => {
           rows="5"
           placeholder="Body"
           onChange={bodyChangedHandler}
-          value={body}></textarea>
+          value={props.item.body}></textarea>
       </div>
       <div className="form-group">
-        {pageMode === 'Insert' ? (
+        {pageMode === PAGE_MODE.INSERT ? (
           <button className="button" onClick={addItemHandler}>
             Add
           </button>
@@ -112,9 +80,30 @@ const ItemDetail = (props) => {
           </button>
         )}
       </div>
-      {loading && <Loading />}
+      {props.loading && <Loading />}
     </div>
   );
 };
 
-export default ItemDetail;
+const mapStateToProps = (state) => {
+  return {
+    item: state.detailPageReducer.item,
+    loading: state.rootReducer.loading,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getItem: (id) => dispatch(actionCreators.getItem(id)),
+    setItem: (item) => dispatch(actionCreators.setItem(item)),
+    postItem: (item, callback) =>
+      dispatch(actionCreators.postItem(item, callback)),
+    putItem: (item, callback) =>
+      dispatch(actionCreators.putItem(item, callback)),
+    setLoading: (loading) => {
+      dispatch(rootActionCreators.setLoading(loading));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ItemDetail);

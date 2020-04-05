@@ -1,32 +1,62 @@
+export const SET_ITEM = 'SET_ITEM';
 export const SET_ID = 'SET_ID';
 export const SET_TITLE = 'SET_TITLE';
 export const SET_BODY = 'SET_BODY';
 export const SET_PAGE_MODE = 'SET_PAGE_MODE';
+export const GET_ITEM = 'GET_ITEM';
+export const SUCCESS_GET_ITEM = 'SUCCESS_GET_ITEM';
+export const POST_ITEM = 'POST_ITEM';
+export const SUCCESS_POST_ITEM = 'SUCCESS_POST_ITEM';
+export const PUT_ITEM = 'PUT_ITEM';
+export const SUCCESS_PUT_ITEM = 'SUCCESS_POST_ITEM';
 
-export const setId = (id) => {
+export const setItem = (item) => {
   return {
-    type: SET_ID,
+    type: SET_ITEM,
+    item: { ...item },
+  };
+};
+
+export const getItem = (id) => {
+  return {
+    type: GET_ITEM,
     id,
   };
 };
 
-export const setTitle = (title) => {
+export const postItem = (item, callback) => {
   return {
-    type: SET_TITLE,
-    title,
+    type: POST_ITEM,
+    item,
+    callback,
   };
 };
 
-export const setBody = (body) => {
+export const putItem = (item, callback) => {
   return {
-    type: SET_BODY,
-    body,
+    type: PUT_ITEM,
+    item,
+    callback,
   };
 };
 
-export const setPageMode = (pageMode) => {
+export const successGetItem = (item) => {
   return {
-    type: SET_PAGE_MODE,
-    pageMode,
+    type: SUCCESS_GET_ITEM,
+    item,
+  };
+};
+
+export const successPost = (item) => {
+  return {
+    type: SUCCESS_POST_ITEM,
+    item,
+  };
+};
+
+export const successPut = (item) => {
+  return {
+    type: SUCCESS_PUT_ITEM,
+    item,
   };
 };
