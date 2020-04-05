@@ -1,3 +1,6 @@
+This is just a demo project to practice React Hooks, Redux, Redux Saga and React Router.
+Click [DEMO](https://fatihkucuk.github.io/react-crud-app) to view it in the browser.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
