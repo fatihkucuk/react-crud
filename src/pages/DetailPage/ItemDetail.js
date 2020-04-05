@@ -1,30 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import './ItemDetail.css';
 import Loading from '../../components/Loading/Loading';
-import { connect } from 'react-redux';
-import * as actionCreators from './store/action-types';
-import * as rootActionCreators from '../../store/action-types';
 import { PAGE_MODE } from '../../constants';
+import { useSelector, useDispatch } from 'react-redux';
+import { getItem, setItem, postItem, putItem } from './store/actions';
+
 const ItemDetail = (props) => {
+  const dispatch = useDispatch();
+
   const [pageMode, setPageMode] = useState(
     !!props.match.params.id ? PAGE_MODE.UPDATE : PAGE_MODE.INSERT
   );
 
+  const item = useSelector((state) => state.detailPageReducer.item);
+  const loading = useSelector((state) => state.rootReducer.loading);
+
   useEffect(() => {
-    props.setItem({ id: '', title: '', body: '' });
+    dispatch(setItem({ id: '', title: '', body: '' }));
     if (pageMode === PAGE_MODE.UPDATE) {
-      props.getItem(props.match.params.id);
+      dispatch(getItem(props.match.params.id));
     }
   }, []);
 
   const titleChangedHandler = (e) => {
-    props.item.title = e.target.value;
-    props.setItem(props.item);
+    item.title = e.target.value;
+    dispatch(setItem(item));
   };
 
   const bodyChangedHandler = (e) => {
-    props.item.body = e.target.value;
-    props.setItem(props.item);
+    item.body = e.target.value;
+    dispatch(setItem(item));
   };
 
   const navigateToListPage = () => {
@@ -35,15 +40,14 @@ const ItemDetail = (props) => {
     const callback = () => {
       navigateToListPage();
     };
-    props.postItem(props.item, callback);
+    dispatch(postItem(item, callback));
   };
 
   const updateItemHandler = () => {
     const callback = () => {
       navigateToListPage();
     };
-    props.setLoading(true);
-    props.putItem(props.item, callback);
+    dispatch(putItem(item, callback));
   };
 
   return (
@@ -56,7 +60,7 @@ const ItemDetail = (props) => {
           type="text"
           placeholder="Title"
           onChange={titleChangedHandler}
-          value={props.item.title}></input>
+          value={item.title}></input>
       </div>
       <div className="form-group">
         <label>Body</label>
@@ -67,7 +71,7 @@ const ItemDetail = (props) => {
           rows="5"
           placeholder="Body"
           onChange={bodyChangedHandler}
-          value={props.item.body}></textarea>
+          value={item.body}></textarea>
       </div>
       <div className="form-group">
         {pageMode === PAGE_MODE.INSERT ? (
@@ -80,30 +84,9 @@ const ItemDetail = (props) => {
           </button>
         )}
       </div>
-      {props.loading && <Loading />}
+      {loading && <Loading />}
     </div>
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    item: state.detailPageReducer.item,
-    loading: state.rootReducer.loading,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getItem: (id) => dispatch(actionCreators.getItem(id)),
-    setItem: (item) => dispatch(actionCreators.setItem(item)),
-    postItem: (item, callback) =>
-      dispatch(actionCreators.postItem(item, callback)),
-    putItem: (item, callback) =>
-      dispatch(actionCreators.putItem(item, callback)),
-    setLoading: (loading) => {
-      dispatch(rootActionCreators.setLoading(loading));
-    },
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ItemDetail);
+export default ItemDetail;

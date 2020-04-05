@@ -4,6 +4,10 @@ export const getItem = (id) => {
   return actionTypes.getItem(id);
 };
 
+export const setItem = (item) => {
+  return actionTypes.setItem(item);
+};
+
 export const successGetItem = (item) => {
   return actionTypes.setItem(item);
 };

@@ -1,7 +1,7 @@
 import { takeLatest, put, call } from 'redux-saga/effects';
 import * as actionTypes from './action-types';
 import { successGetItems, successDeleteItem } from './actions';
-import { setLoading } from '../../../store/action-types';
+import { setLoading } from '../../../store/actions';
 import axios from 'axios';
 import { apiEndpoint } from '../../../constants';
 

@@ -1,7 +1,7 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 import * as actionTypes from './action-types';
-import { setLoading } from '../../../store/action-types';
+import { setLoading } from '../../../store/actions';
 import { apiEndpoint } from '../../../constants';
 function* getItem({ id }) {
   yield put(setLoading(true));
